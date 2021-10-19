@@ -1,2 +1,4 @@
 Data for temperature, precipitation, and snowfall: http://climate.colostate.edu/data_access.html
 
+Drought data and info: https://www.drought.gov/states/colorado
+
