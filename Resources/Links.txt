@@ -1,0 +1,2 @@
+Data for temperature, precipitation, and snowfall: http://climate.colostate.edu/data_access.html
+
