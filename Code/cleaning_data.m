@@ -62,3 +62,6 @@ end
 weather_clean = array2table(weather_avg_daily);
 weather_clean = [dates weather_clean];
 weather_clean.Properties.VariableNames = {'Dates', 'Max Temp', 'Min Temp', 'Pcpn', 'Snow'};
+
+% save file
+writetable(weather_clean,'Data\Clean Data\Weather\weatherAvg_CLEANED.csv');
