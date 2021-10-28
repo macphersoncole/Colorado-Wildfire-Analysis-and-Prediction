@@ -11,9 +11,9 @@ close all;
 %% Drought Data Cleaning
 drought_raw = readtable('Data\Raw Data\Drought\USDM-colorado_drought_weekly_2001_2021.csv');
 
+d_temp = drought_raw(:,[1 3:10]); % get important columns
 d_temp = drought_raw{:,3:8};
 
-% determine highest drought level
 temp = strings(length(d_temp),1);
 for i = 1:length(d_temp)
     if d_temp(i,1) == 100
@@ -31,11 +31,7 @@ for i = 1:length(d_temp)
     end
 end
 
-% set cleaned data
-drought_cleaned = drought_raw(:,[9:10 3:8]);
-drought_cleaned.HighestDroughtLevel = temp;
+%temp = ["Highest Level"; temp];
 
-% write cleaned data to csv
-writetable(drought_cleaned,'Data\Clean Data\Drought\USDM-colorado_drought_weekly_2001_2021_CLEANED.csv');
-
-%% Weather Data Cleaning
+drought_cleaned = drought_raw(:,[1 3:10]);
+drought_cleaned.
