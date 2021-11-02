@@ -65,3 +65,66 @@ weather_clean.Properties.VariableNames = {'Dates', 'Max Temp', 'Min Temp', 'Pcpn
 
 % save file
 writetable(weather_clean,'Data\Clean Data\Weather\weatherAvg_CLEANED.csv');
+
+%% Population Data
+pop_raw = readtable("Data\Raw Data\Population\popbycountyandmuni.xlsx");
+pop_raw_cell = table2cell(pop_raw);
+
+% counties data
+pop_counties = cell(64,11);
+j = 1;
+for i = 3:length(pop_raw_cell)
+    if isempty(pop_raw_cell{i,2})
+        
+    elseif pop_raw_cell{i,2} == '00000'
+        pop_counties(j,1) = pop_raw_cell(i,3);
+        pop_counties(j,2:11) = pop_raw_cell(i,4:13);
+        j = j + 1;
+    end
+end
+
+pop_counties = pop_counties(1:(end-1),:);
+
+% cities data
+pop_cities = cell(273,11);
+
+j = 1;
+UA_tot = zeros(1,10);
+for i = 3:length(pop_raw_cell)
+    if isempty(pop_raw_cell{i,1})
+        
+    elseif contains(pop_raw_cell{i,2}, '00000')
+        
+    elseif contains(pop_raw_cell{i,3},'(Part)')
+        
+    elseif contains(pop_raw_cell{i,3},'Unincorp. Area')
+        for k = 1:10
+            UA_tot(k) = UA_tot(k) + pop_raw_cell{i,(k+3)};
+        end
+        
+    elseif contains(pop_raw_cell{i,3},'(Total)')
+        idx = strfind(convertCharsToStrings(pop_raw_cell{i,3}), '(Total)');
+        pop_cities(j,1) = cellstr(pop_raw_cell{i,3}(1:(idx-2)));
+        pop_cities(j,2:11) = pop_raw_cell(i,4:13);
+        j = j + 1;
+    else
+        pop_cities(j,1) = pop_raw_cell(i,3);
+        pop_cities(j,2:11) = pop_raw_cell(i,4:13);
+        j = j + 1;        
+    end
+end
+
+pop_cities(273,1) = cellstr('Unincorp. Area');
+pop_cities(273,2:11) = num2cell(UA_tot);
+
+% create tables
+counties_pop_table = cell2table(pop_counties,'VariableNames',{'County' '2010' '2011' '2012' '2013' '2014' '2015' '2016' '2017' '2018' '2019'});
+cities_pop_table = cell2table(pop_cities,'VariableNames',{'City/Town' '2010' '2011' '2012' '2013' '2014' '2015' '2016' '2017' '2018' '2019'});
+
+% save
+writetable(counties_pop_table,'Data\Clean Data\Population\counties_CLEANED.csv');
+writetable(cities_pop_table,'Data\Clean Data\Population\cities_CLEANED.csv');
+
+
+
+
