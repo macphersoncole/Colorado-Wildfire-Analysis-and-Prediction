@@ -125,6 +125,28 @@ cities_pop_table = cell2table(pop_cities,'VariableNames',{'City/Town' '2010' '20
 writetable(counties_pop_table,'Data\Clean Data\Population\counties_CLEANED.csv');
 writetable(cities_pop_table,'Data\Clean Data\Population\cities_CLEANED.csv');
 
+%% Wildfire Data
+wildfire_raw = readtable("Data\Raw Data\Wildfires\US_Wildfires_1878_2019.xlsx");
+wildfire_raw_cell = table2cell(wildfire_raw);
+
+wildfire_timerange = cell(13067,width(wildfire_raw));
+j = 1;
+for i = 1:height(wildfire_raw)
+    if ~isnat(wildfire_raw_cell{i,4})
+        if wildfire_raw_cell{i,3} >= 2009 && wildfire_raw_cell{i,3} <= 2019
+            wildfire_timerange(j,:) = wildfire_raw_cell(i,:);
+            j = j + 1;
+        end
+    end
+end
+
+wildfire_usefull = wildfire_timerange(:,[1 3:4 7:8 11 17:18]);
+
+% create table
+wildfire_table_clean = cell2table(wildfire_usefull,'VariableNames',{'Name' 'Year' 'Date' 'Acres' 'Hectares' 'Cause' 'Shape Length' 'Shape Area'});
+
+% save table
+writetable(wildfire_table_clean,'Data\Clean Data\Wildfires\CO_WIldfires_2009_2019_CLEANED.csv');
 
 
 
