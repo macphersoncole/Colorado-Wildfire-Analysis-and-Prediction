@@ -129,13 +129,15 @@ writetable(cities_pop_table,'Data\Clean Data\Population\cities_CLEANED.csv');
 wildfire_raw = readtable("Data\Raw Data\Wildfires\US_Wildfires_1878_2019.xlsx");
 wildfire_raw_cell = table2cell(wildfire_raw);
 
-wildfire_timerange = cell(13067,width(wildfire_raw));
+wildfire_timerange = cell(1228,width(wildfire_raw));
 j = 1;
 for i = 1:height(wildfire_raw)
     if ~isnat(wildfire_raw_cell{i,4})
-        if wildfire_raw_cell{i,3} >= 2009 && wildfire_raw_cell{i,3} <= 2019
-            wildfire_timerange(j,:) = wildfire_raw_cell(i,:);
-            j = j + 1;
+        if wildfire_raw_cell{i,7} >= 5000
+            if wildfire_raw_cell{i,3} >= 2009 && wildfire_raw_cell{i,3} <= 2019
+                wildfire_timerange(j,:) = wildfire_raw_cell(i,:);
+                j = j + 1;
+            end
         end
     end
 end
