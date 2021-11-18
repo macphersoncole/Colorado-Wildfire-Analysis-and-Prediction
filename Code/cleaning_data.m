@@ -157,6 +157,18 @@ WFGC_Y = groupcounts(wildfire_table_clean,"Year");
 
 WFGC_C = groupcounts(wildfire_table_clean,"Cause");
 
+% Causes = categorical(["Humans", "Lightning", "Natural", "Unknown/Undefined"]);
+% Causes = reordercats(Causes,["Humans", "Lightning", "Natural", "Unknown/Undefined"]);
+% C_Counts = [sum(WFGC_C{2:5,2})+WFGC_C{7,2}, WFGC_C{1,2}+WFGC_C{8,2}, WFGC_C{11,2}+WFGC_C{12,2}, WFGC_C{9,2}+sum(WFGC_C{9:10,2})+sum(WFGC_C{13:16,2})];
+
+Causes = categorical(["Humans", "Lightning", "Natural"]);
+Causes = reordercats(Causes,["Humans", "Lightning", "Natural"]);
+C_Counts = [sum(WFGC_C{2:5,2})+WFGC_C{7,2}, WFGC_C{1,2}+WFGC_C{8,2}, WFGC_C{11,2}+WFGC_C{12,2}];
+
+
+figure
+bar(Causes, C_Counts);
+
 figure
 yyaxis left
 plot(WFGC_Y{:,1},WFGC_Y{:,2},'linewidth',2)

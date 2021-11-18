@@ -151,11 +151,31 @@ wildfire_table_clean = cell2table(wildfire_usefull,'VariableNames',{'Name' 'Year
 % save table
 writetable(wildfire_table_clean,'Data\Clean Data\Wildfires\CO_WIldfires_2009_2019_CLEANED.csv');
 
-%% Plot Wildfires vs Population
+%% Plot Wildfires & Population vs Time
 
-for i = 1:length(wildfire_usefull)
-    
-end
+WFGC_Y = groupcounts(wildfire_table_clean,"Year");
+
+WFGC_C = groupcounts(wildfire_table_clean,"Cause");
+
+% Causes = categorical(["Humans", "Lightning", "Natural", "Unknown/Undefined"]);
+% Causes = reordercats(Causes,["Humans", "Lightning", "Natural", "Unknown/Undefined"]);
+% C_Counts = [sum(WFGC_C{2:5,2})+WFGC_C{7,2}, WFGC_C{1,2}+WFGC_C{8,2}, WFGC_C{11,2}+WFGC_C{12,2}, WFGC_C{9,2}+sum(WFGC_C{9:10,2})+sum(WFGC_C{13:16,2})];
+
+Causes = categorical(["Humans", "Lightning", "Natural"]);
+Causes = reordercats(Causes,["Humans", "Lightning", "Natural");
+C_Counts = [sum(WFGC_C{2:5,2})+WFGC_C{7,2}, WFGC_C{1,2}+WFGC_C{8,2}, WFGC_C{11,2}+WFGC_C{12,2}, WFGC_C{9,2}+sum(WFGC_C{9:10,2})+sum(WFGC_C{13:16,2})];
+
 
 figure
-plot()
+bar(Causes, C_Counts);
+
+figure
+yyaxis left
+plot(WFGC_Y{:,1},WFGC_Y{:,2},'linewidth',2)
+title("WIldfires and Population vs Time");
+xlabel("Year")
+ylabel("Number of Wildfires")
+hold on
+yyaxis right
+ylabel("Total Population of Colorado")
+plot([2010:2019],[pop_raw_cell{1,4:13}],'linewidth',2)
