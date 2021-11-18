@@ -151,19 +151,11 @@ wildfire_table_clean = cell2table(wildfire_usefull,'VariableNames',{'Name' 'Year
 % save table
 writetable(wildfire_table_clean,'Data\Clean Data\Wildfires\CO_WIldfires_2009_2019_CLEANED.csv');
 
-%% Plot Wildfires & Population vs Time
+%% Plot Wildfires vs Population
 
-WFGC_Y = groupcounts(wildfire_table_clean,"Year");
-
-WFGC_C = groupcounts(wildfire_table_clean,"Cause");
+for i = 1:length(wildfire_usefull)
+    
+end
 
 figure
-yyaxis left
-plot(WFGC_Y{:,1},WFGC_Y{:,2},'linewidth',2)
-title("WIldfires and Population vs Time");
-xlabel("Year")
-ylabel("Number of Wildfires")
-hold on
-yyaxis right
-ylabel("Total Population of Colorado")
-plot([2010:2019],[pop_raw_cell{1,4:13}],'linewidth',2)
+plot()
